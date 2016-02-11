@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
         libcurl3 \
         libcurl4-gnutls-dev \
         libxml2-dev \
-    && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip \
+    && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip gd \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
 
