@@ -15,6 +15,8 @@ RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
         libxslt-dev \
         libxml2-dev \
         ssmtp \
+        libmemcached-dev \
+        libmemcached11 \
         nodejs \
     && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip gd xsl \
     && apt-get clean  \
@@ -48,3 +50,12 @@ RUN curl https://xdebug.org/files/xdebug-2.4.0rc4.tgz > xdebug-2.4.0rc4.tgz \
     && ./configure --enable-xdebug --with-php-config=/usr/local/bin/php-config \
     && make \
     && cp modules/xdebug.so /usr/local/lib/php/extensions/no-debug-non-zts-20151012/
+
+# Install Memcache
+RUN git clone https://github.com/php-memcached-dev/php-memcached \
+    && cd php-memcached \
+    && git checkout -b php7 origin/php7 \
+    && /usr/local/bin/phpize \
+    && ./configure --with-php-config=/usr/local/bin/php-config \
+    && make \
+    && make install
