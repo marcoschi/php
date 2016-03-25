@@ -43,9 +43,9 @@ RUN echo "sendmail_path = /usr/sbin/ssmtp -t" > /usr/local/etc/php/conf.d/sendma
     && echo "mailhub=mailcatcher:25\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
 
 # Install xDebug
-RUN curl https://xdebug.org/files/xdebug-2.4.0.tgz > xdebug-2.4.0.tgz \
-    && tar -xvzf xdebug-2.4.0.tgz \
-    && cd xdebug-2.4.0 \
+RUN curl https://xdebug.org/files/xdebug-2.3.3.tgz > xdebug-2.3.3.tgz \
+    && tar -xvzf xdebug-2.3.3.tgz \
+    && cd xdebug-2.3.3 \
     && /usr/local/bin/phpize \
     && ./configure --enable-xdebug --with-php-config=/usr/local/bin/php-config \
     && make \
