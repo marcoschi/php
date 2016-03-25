@@ -1,4 +1,4 @@
-FROM php:7.0.4-fpm
+FROM php:5.3.3-fpm
 
 # Install Node
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
@@ -18,7 +18,8 @@ RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
         libmemcached-dev \
         libmemcached11 \
         nodejs \
-    && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip gd xsl \
+        memcached \
+    && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip gd xsl memcache \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
 
@@ -43,22 +44,13 @@ RUN echo "sendmail_path = /usr/sbin/ssmtp -t" > /usr/local/etc/php/conf.d/sendma
     && echo "mailhub=mailcatcher:25\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
 
 # Install xDebug
-RUN curl https://xdebug.org/files/xdebug-2.4.0rc4.tgz > xdebug-2.4.0rc4.tgz \
-    && tar -xvzf xdebug-2.4.0rc4.tgz \
-    && cd xdebug-2.4.0RC4 \
+RUN curl https://xdebug.org/files/xdebug-2.4.0rc4.tgz > xdebug-2.4.0.tgz \
+    && tar -xvzf xdebug-2.4.0.tgz \
+    && cd xdebug-2.4.0 \
     && /usr/local/bin/phpize \
     && ./configure --enable-xdebug --with-php-config=/usr/local/bin/php-config \
     && make \
     && cp modules/xdebug.so /usr/local/lib/php/extensions/no-debug-non-zts-20151012/
-
-# Install Memcache
-RUN git clone https://github.com/php-memcached-dev/php-memcached \
-    && cd php-memcached \
-    && git checkout -b php7 origin/php7 \
-    && /usr/local/bin/phpize \
-    && ./configure --with-php-config=/usr/local/bin/php-config \
-    && make \
-    && make install
 
 # Install Blackfire
 RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
