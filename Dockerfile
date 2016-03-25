@@ -27,7 +27,7 @@ RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer
 
 # Install Drush 8.
-RUN composer global require drush/drush:8.* \
+RUN composer global require drush/drush:7.* \
     && composer global update \
     && ln -s /root/.composer/vendor/bin/drush /usr/local/bin/drush
 
