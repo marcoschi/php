@@ -1,4 +1,4 @@
-FROM php:5.3.3-fpm
+FROM helder/php-5.3
 
 # Install Node
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
