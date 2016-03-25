@@ -41,18 +41,3 @@ RUN echo 'root:root' | chpasswd \
 # Install ssmtp
 RUN echo "sendmail_path = /usr/sbin/ssmtp -t" > /usr/local/etc/php/conf.d/sendmail.ini \
     && echo "mailhub=mailcatcher:25\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
-
-# Install xDebug
-RUN curl https://xdebug.org/files/xdebug-2.3.3.tgz > xdebug-2.3.3.tgz \
-    && tar -xvzf xdebug-2.3.3.tgz \
-    && cd xdebug-2.3.3 \
-    && /usr/local/bin/phpize \
-    && ./configure --enable-xdebug --with-php-config=/usr/local/bin/php-config \
-    && make \
-    && cp modules/xdebug.so /usr/local/lib/php/extensions/no-debug-non-zts-20151012/
-
-# Install Blackfire
-RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
-    && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/${VERSION} \
-    && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp \
-    && mv /tmp/blackfire-*.so `php -r "echo ini_get('extension_dir');"`/blackfire.so
