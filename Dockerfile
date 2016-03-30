@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
         libmemcached-dev \
         libmemcached11 \
         nodejs \
-    && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip gd xsl \
+    && docker-php-ext-install mysqli pdo_mysql mbstring calendar soap zip gd xsl \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
 
