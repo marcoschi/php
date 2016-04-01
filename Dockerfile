@@ -1,5 +1,8 @@
 FROM php:5.6.18-fpm
 
+# Install Node
+RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+
 # Install extensions.
 RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
         git \
@@ -12,7 +15,11 @@ RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
         libxslt-dev \
         libxml2-dev \
         ssmtp \
-    && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip gd xsl \
+        libmemcached-dev \
+        libmemcached11 \
+        nodejs \
+        patch \
+    && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip gd xsl sockets \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
 
@@ -35,6 +42,14 @@ RUN echo 'root:root' | chpasswd \
 # Install ssmtp.
 RUN echo "sendmail_path = /usr/sbin/ssmtp -t" > /usr/local/etc/php/conf.d/sendmail.ini && \
     echo "mailhub=mailcatcher:25\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
+
+# Install Memcache
+RUN git clone https://github.com/php-memcached-dev/php-memcached \
+    && cd php-memcached \
+    && /usr/local/bin/phpize \
+    && ./configure --with-php-config=/usr/local/bin/php-config \
+    && make \
+    && make install
 
 # Install xDebug.
 RUN yes | pecl install xdebug
