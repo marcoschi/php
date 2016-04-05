@@ -19,6 +19,8 @@ RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
         libmemcached11 \
         nodejs \
         patch \
+        libmagickwand-dev \
+        imagemagick \
     && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip gd xsl \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
@@ -56,6 +58,15 @@ RUN curl https://xdebug.org/files/xdebug-2.4.0rc4.tgz > xdebug-2.4.0rc4.tgz \
 RUN git clone https://github.com/php-memcached-dev/php-memcached \
     && cd php-memcached \
     && git checkout -b php7 origin/php7 \
+    && /usr/local/bin/phpize \
+    && ./configure --with-php-config=/usr/local/bin/php-config \
+    && make \
+    && make install
+
+# Install ImageMagick
+RUN git clone https://github.com/mkoppanen/imagick \
+    && cd imagick \
+    && git checkout -b phpseven origin/phpseven \
     && /usr/local/bin/phpize \
     && ./configure --with-php-config=/usr/local/bin/php-config \
     && make \
