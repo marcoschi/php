@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
         libmemcached11 \
         nodejs \
         patch \
+        rsyslog \
     && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip gd xsl sockets \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
@@ -59,4 +60,7 @@ RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
     && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/${VERSION} \
     && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp \
     && mv /tmp/blackfire-*.so `php -r "echo ini_get('extension_dir');"`/blackfire.so
+
+# Configure syslog
+RUN echo "local0.* /var/log/drupal.log" > /etc/rsyslog.conf
     
