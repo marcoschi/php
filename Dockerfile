@@ -62,5 +62,5 @@ RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
     && mv /tmp/blackfire-*.so `php -r "echo ini_get('extension_dir');"`/blackfire.so
 
 # Configure syslog
-RUN echo "local0.* /var/log/drupal.log" > /etc/rsyslog.conf
+RUN echo "local0.* /var/log/drupal.log" >> /etc/rsyslog.conf
     
