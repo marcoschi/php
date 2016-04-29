@@ -64,6 +64,3 @@ RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
 
 # Configure syslog
 RUN echo "local0.* /var/log/drupal/drupal.log" >> /etc/rsyslog.conf
-    
-# Start supervisord
-CMD ["/usr/bin/supervisord"]
