@@ -23,8 +23,7 @@ RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
         supervisor \
     && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip gd xsl sockets \
     && apt-get clean  \
-    && rm -rf /var/lib/apt/lists/* \
-    && mkdir /var/log/supervisor
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Composer.
 RUN curl -sS https://getcomposer.org/installer | php \
