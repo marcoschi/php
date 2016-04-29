@@ -20,9 +20,11 @@ RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
         nodejs \
         patch \
         rsyslog \
+        supervisor \
     && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip gd xsl sockets \
     && apt-get clean  \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir /var/log/supervisor
 
 # Install Composer.
 RUN curl -sS https://getcomposer.org/installer | php \
@@ -64,3 +66,5 @@ RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
 # Configure syslog
 RUN echo "local0.* /var/log/drupal/drupal.log" >> /etc/rsyslog.conf
     
+# Start supervisord
+CMD ["/usr/bin/supervisord"]
