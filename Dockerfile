@@ -20,7 +20,6 @@ RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
         nodejs \
         patch \
         rsyslog \
-        supervisor \
     && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip gd xsl sockets \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
@@ -62,5 +61,8 @@ RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
     && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp \
     && mv /tmp/blackfire-*.so `php -r "echo ini_get('extension_dir');"`/blackfire.so
 
-# Configure syslog
-RUN echo "local0.* /var/log/drupal/drupal.log" >> /etc/rsyslog.conf
+# Add entrypoint
+COPY init.d /docker-entrypoint-init.d/
+COPY docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["php-fpm"]
