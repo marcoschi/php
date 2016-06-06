@@ -32,5 +32,5 @@ RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
 # Add entrypoint.
 COPY init.d /docker-entrypoint-init.d/
 COPY docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
+RUN /docker-entrypoint.sh
 CMD ["php-fpm"]
