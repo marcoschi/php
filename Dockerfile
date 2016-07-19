@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
         openssh-server \
         libmcrypt-dev \
         libpng12-dev \
+        libjpeg-dev \
+        libfreetype6-dev \
         libcurl3 \
         libcurl4-gnutls-dev \
         libxslt-dev \
