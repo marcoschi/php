@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
         nodejs \
         patch \
         rsyslog \
-    && docker-php-ext-configure gd –with-jpeg-dir –with-freetype-dir \
+    && docker-php-ext-configure gd --with-jpeg-dir --with-freetype-dir \
     && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip gd xsl sockets \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
