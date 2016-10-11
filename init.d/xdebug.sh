@@ -1,9 +1,9 @@
 #!/bin/bash
 
 cd ~
-curl https://xdebug.org/files/xdebug-2.4.0.tgz > xdebug-2.4.0.tgz
-tar -xvzf xdebug-2.4.0.tgz
-cd xdebug-2.4.0
+curl https://xdebug.org/files/xdebug-2.4.1.tgz > xdebug-2.4.1.tgz
+tar -xvzf xdebug-2.4.1.tgz
+cd xdebug-2.4.1
 /usr/local/bin/phpize
 ./configure --enable-xdebug --with-php-config=/usr/local/bin/php-config
 make
