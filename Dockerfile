@@ -1,4 +1,4 @@
-FROM php:7.0.7-fpm
+FROM php:7.0.14-fpm
 
 # Install Node
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
         imagemagick \
         rsyslog \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml soap zip gd xsl \
+    && docker-php-ext-install mysqli pdo_mysql mbstring calendar json curl xml bcmath zip gd xsl \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
 
