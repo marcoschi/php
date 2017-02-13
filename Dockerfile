@@ -1,7 +1,7 @@
 FROM php:7.0.14-fpm
 
 # Install Node
-RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 
 # Install extensions.
 RUN apt-get update && apt-get install --no-install-recommends --force-yes -y \
