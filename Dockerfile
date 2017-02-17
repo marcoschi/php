@@ -50,6 +50,7 @@ RUN echo "sendmail_path = /usr/sbin/ssmtp -t" > /usr/local/etc/php/conf.d/sendma
 # Install Memcache
 RUN git clone https://github.com/php-memcached-dev/php-memcached \
     && cd php-memcached \
+    && git checkout 2.2.0 \
     && /usr/local/bin/phpize \
     && ./configure --with-php-config=/usr/local/bin/php-config \
     && make \
@@ -64,7 +65,7 @@ RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
     && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp \
     && mv /tmp/blackfire-*.so `php -r "echo ini_get('extension_dir');"`/blackfire.so
 
-working_dir: /var/www/docroot
+WORKDIR /var/www/docroot
 
 # Add entrypoint
 COPY init.d /docker-entrypoint-init.d/
