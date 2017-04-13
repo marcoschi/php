@@ -44,3 +44,6 @@ RUN echo 'root:root' | chpasswd \
 # Install ssmtp
 RUN echo "sendmail_path = /usr/sbin/ssmtp -t" > /usr/local/etc/php/conf.d/sendmail.ini \
     && echo "mailhub=mailcatcher:25\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
+
+# Install xDebug.
+RUN yes | pecl install xdebug
