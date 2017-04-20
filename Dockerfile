@@ -1,4 +1,4 @@
-FROM php:7.0.14-fpm
+FROM php:7.1.3-fpm
 
 # Install Node
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
